@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour {
 	}
 		
 	void FixedUpdate () {
-		// player movement by second using physics
+		// moves the player by second using physics
 		// use physics (rigidbody) to compute the player movement is better than transform.position 
 		// because prevents the player to "bug" when colliding with other objects
 		GetComponent<Rigidbody>().MovePosition(
