@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private float speed;
 	[SerializeField] private LayerMask groundMask;
 	[SerializeField] private ScreenController screenController;
+	[SerializeField] private AudioClip damageSound;
 
 	private Vector3 direction;
 	private Rigidbody rigidbodyPlayer;
@@ -72,6 +73,9 @@ public class PlayerController : MonoBehaviour {
 	public void LoseHealth (int damage) {
 		health -= damage;
 		screenController.UpdateHealthSlider();
+
+		// plays the damage sound
+		AudioController.instance.PlayOneShot(damageSound);
 
 		if (health <= 0)
 			GameOver();

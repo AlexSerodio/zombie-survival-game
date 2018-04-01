@@ -3,6 +3,7 @@
 public class Projectile : MonoBehaviour {
 
 	[SerializeField] private float speed;
+	[SerializeField] private AudioClip deathSound;
 
 	private Rigidbody rigidbodyProjectile;
 
@@ -18,8 +19,12 @@ public class Projectile : MonoBehaviour {
 
 	// Destroy the projectile and the enemy
 	void OnTriggerEnter (Collider other) {
-		if (other.CompareTag ("Enemy"))
+		if (other.CompareTag ("Enemy")) {
 			Destroy(other.gameObject);
+
+			// plays the death sound
+			AudioController.instance.PlayOneShot(deathSound);
+		}
 
 		Destroy(gameObject);
 	}

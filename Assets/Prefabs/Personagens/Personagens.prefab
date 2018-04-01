@@ -1730,12 +1730,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c42c7760397f6f7459b67b71b6c2d578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
   gameOverText: {fileID: 0}
-  isAlive: 1
   speed: 20
   groundMask:
     serializedVersion: 2
     m_Bits: 256
+  screenController: {fileID: 0}
+  damageSound: {fileID: 8300000, guid: 015a6c6498c72324ca0fd6fdae62b1da, type: 3}
 --- !u!114 &114727108132320830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1749,6 +1751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 1940354067174096, guid: 80b905e0a2c68804f9b51d379681a5c6, type: 2}
   shootPosition: {fileID: 4751282350459432}
+  shotSound: {fileID: 8300000, guid: ff894c666a8a12b49ae2ac522cb8b4ae, type: 3}
 --- !u!136 &136843727479333622
 CapsuleCollider:
   m_ObjectHideFlags: 1
