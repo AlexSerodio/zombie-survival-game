@@ -502,6 +502,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1839258882595424, guid: 7f916ddb20543554d84057ff2773a13c, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7f916ddb20543554d84057ff2773a13c, type: 2}
   m_IsPrefabParent: 0
@@ -709,6 +713,11 @@ Prefab:
     - target: {fileID: 1884102019447498, guid: 4b3bb44effa49480d8d18049684cc33a, type: 2}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 114631424241242012, guid: 4b3bb44effa49480d8d18049684cc33a,
+        type: 2}
+      propertyPath: groundMask.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b3bb44effa49480d8d18049684cc33a, type: 2}

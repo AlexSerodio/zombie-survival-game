@@ -9,4 +9,11 @@ public class Projectile : MonoBehaviour {
 		GetComponent<Rigidbody>().MovePosition(
 			GetComponent<Rigidbody>().position + (transform.forward * speed * Time.deltaTime));
 	}
+
+	void OnTriggerEnter (Collider other) {
+		if (other.CompareTag ("Enemy"))
+			Destroy(other.gameObject);
+
+		Destroy(gameObject);
+	}
 }

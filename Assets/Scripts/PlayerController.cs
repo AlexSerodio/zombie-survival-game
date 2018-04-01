@@ -4,6 +4,8 @@ public class PlayerController : MonoBehaviour {
 
 	[SerializeField]
 	private float speed;
+	[SerializeField]
+	private LayerMask groundMask;
 	private Vector3 direction;
 
 	void Update () {
@@ -28,5 +30,16 @@ public class PlayerController : MonoBehaviour {
 		// because prevents the player to "bug" when colliding with other objects
 		GetComponent<Rigidbody>().MovePosition(
 			GetComponent<Rigidbody>().position + (direction * Time.deltaTime * speed));
+
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
+
+		RaycastHit hit;
+		if (Physics.Raycast(ray, out hit, 100, groundMask)) {
+			Vector3 positionPoint = hit.point - transform.position;
+			positionPoint.y = transform.position.y;
+			Quaternion newRotation = Quaternion.LookRotation(positionPoint);
+			GetComponent<Rigidbody>().MoveRotation(newRotation);
+		}
 	}
 }
