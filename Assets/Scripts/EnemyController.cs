@@ -2,8 +2,23 @@
 
 public class EnemyController : MonoBehaviour {
 
-	[SerializeField] private Transform player;
 	[SerializeField] private float speed;
+	private Transform player;
+	private Rigidbody rigidbodyEnemy;
+	private Animator animatorEnemy;
+
+	void Start () {
+		// finds the player object
+		player = GameObject.FindGameObjectWithTag("Player").transform;
+
+		// gets a random enemy
+		// (the Zombie prefab has 27 different zombie models inside it)
+		int randomEnemy = Random.Range(1, 28);
+		transform.GetChild(randomEnemy).gameObject.SetActive(true);
+
+		rigidbodyEnemy = GetComponent<Rigidbody>();
+		animatorEnemy = GetComponent<Animator>();
+	}
 
 	void FixedUpdate () {
 
@@ -16,23 +31,28 @@ public class EnemyController : MonoBehaviour {
 
 		// rotates the enemy towards the player
 		Quaternion newRotation = Quaternion.LookRotation (direction);
-		GetComponent<Rigidbody> ().MoveRotation (newRotation);
+		rigidbodyEnemy.MoveRotation (newRotation);
 
-		// check if enemy and player are colliding.
+		// checks if enemy and player are not colliding.
 		// The 2.5f is because both enemy and player have a Capsule Collider with radius equal 1,
 		// so if the distance is bigger than both radius they are colliding
 		if (distance > 2.5f) {
 			// moves the enemy as in the PlayerController but 
 			// instead using the GetAxis method it uses the normalized direction vector
-			GetComponent<Rigidbody> ().MovePosition (
-				GetComponent<Rigidbody> ().position + (direction.normalized * Time.deltaTime * speed));
+			rigidbodyEnemy.MovePosition (
+				rigidbodyEnemy.position + (direction.normalized * Time.deltaTime * speed));
 
-			GetComponent<Animator>().SetBool("Attacking", false);
+			// if they're not colliding the Attacking animation is off
+			animatorEnemy.SetBool("Attacking", false);
 		} else {
-			GetComponent<Animator>().SetBool("Attacking", true);
+			// otherwise, the Attacking animation is on
+			animatorEnemy.SetBool("Attacking", true);
 		}
 	}
 
+	// whem the enemy atacks the player the game ends, that is, 
+	// the game is paused , the Game Over message shows up
+	// and the player is no more alive.
 	void AttackPlayer () {
 		Time.timeScale = 0;
 		player.GetComponent<PlayerController>().gameOverText.SetActive(true);

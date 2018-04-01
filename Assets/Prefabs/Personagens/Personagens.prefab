@@ -1731,6 +1731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverText: {fileID: 0}
+  isAlive: 1
   speed: 20
   groundMask:
     serializedVersion: 2

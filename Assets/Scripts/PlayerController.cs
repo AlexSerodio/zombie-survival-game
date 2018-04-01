@@ -10,9 +10,15 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField]
 	private LayerMask groundMask;
 	private Vector3 direction;
+	private Rigidbody rigidbodyPlayer;
+	private Animator animatorPlayer;
 
 	void Start () {
+		// Start the game without been paused
 		Time.timeScale = 1;
+
+		rigidbodyPlayer = GetComponent<Rigidbody>();
+		animatorPlayer = GetComponent<Animator>();
 	}
 
 	void Update () {
@@ -26,10 +32,12 @@ public class PlayerController : MonoBehaviour {
 
 		// player animations transition
 		if (direction != Vector3.zero)
-			GetComponent<Animator>().SetBool("Running", true);
+			animatorPlayer.SetBool("Running", true);
 		else
-			GetComponent<Animator>().SetBool("Running", false);
+			animatorPlayer.SetBool("Running", false);
 
+		// if the player isn't alive anymore 
+		// and the mouse button was clicked, restart the game
 		if (!isAlive) {
 			if (Input.GetButtonDown ("Fire1"))
 				SceneManager.LoadScene("Game");
@@ -40,18 +48,17 @@ public class PlayerController : MonoBehaviour {
 		// moves the player by second using physics
 		// use physics (rigidbody) to compute the player movement is better than transform.position 
 		// because prevents the player to "bug" when colliding with other objects
-		GetComponent<Rigidbody>().MovePosition(
-			GetComponent<Rigidbody>().position + (direction * Time.deltaTime * speed));
+		rigidbodyPlayer.MovePosition(
+			rigidbodyPlayer.position + (direction * Time.deltaTime * speed));
 
+		// makes the player rotation follows the mouse position
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
-
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 100, groundMask)) {
 			Vector3 positionPoint = hit.point - transform.position;
 			positionPoint.y = transform.position.y;
 			Quaternion newRotation = Quaternion.LookRotation(positionPoint);
-			GetComponent<Rigidbody>().MoveRotation(newRotation);
+			rigidbodyPlayer.MoveRotation(newRotation);
 		}
 	}
 }
