@@ -3,13 +3,14 @@
 public class EnemyController : MonoBehaviour {
 
 	[SerializeField] private float speed;
-	private Transform player;
+
+	private GameObject player;
 	private Rigidbody rigidbodyEnemy;
 	private Animator animatorEnemy;
 
 	void Start () {
 		// finds the player object
-		player = GameObject.FindGameObjectWithTag("Player").transform;
+		player = GameObject.FindGameObjectWithTag("Player");
 
 		// gets a random enemy
 		// (the Zombie prefab has 27 different zombie models inside it)
@@ -23,11 +24,11 @@ public class EnemyController : MonoBehaviour {
 	void FixedUpdate () {
 
 		// get the distance between this enemy and the player
-		float distance = Vector3.Distance(transform.position, player.position);
+		float distance = Vector3.Distance(transform.position, player.transform.position);
 
 		// get the final position, that is, 
 		// the distance between the enemy and the player
-		Vector3 direction = player.position - transform.position;
+		Vector3 direction = player.transform.position - transform.position;
 
 		// rotates the enemy towards the player
 		Quaternion newRotation = Quaternion.LookRotation (direction);
@@ -50,12 +51,11 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
-	// whem the enemy atacks the player the game ends, that is, 
-	// the game is paused , the Game Over message shows up
-	// and the player is no more alive.
+	/// <summary>
+	/// Attacks the player, causing a random damage between 20 and 30.
+	/// </summary>
 	void AttackPlayer () {
-		Time.timeScale = 0;
-		player.GetComponent<PlayerController>().gameOverText.SetActive(true);
-		player.GetComponent<PlayerController> ().isAlive = false;
+		int damage = Random.Range(20, 30);
+		player.GetComponent<PlayerController>().LoseHealth(damage);
 	}
 }

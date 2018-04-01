@@ -2,13 +2,12 @@
 
 public class EnemyFactory : MonoBehaviour {
 
-	[SerializeField]
-	private GameObject enemy;
-	[SerializeField]
-	private float instantiateTime = 1;
+	[SerializeField] private GameObject enemy;
+	[SerializeField] private float instantiateTime = 1;
+
 	private float timeCounter = 0;
 
-	// instantiate a new enemy each second
+	// instantiates a new enemy each second
 	void Update () {
 		timeCounter += Time.deltaTime;
 
