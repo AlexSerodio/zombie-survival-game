@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
+	public GameObject gameOverText;
+	public bool isAlive = true;
 	[SerializeField]
 	private float speed;
 	[SerializeField]
 	private LayerMask groundMask;
 	private Vector3 direction;
+
+	void Start () {
+		Time.timeScale = 1;
+	}
 
 	void Update () {
 
@@ -22,6 +29,11 @@ public class PlayerController : MonoBehaviour {
 			GetComponent<Animator>().SetBool("Running", true);
 		else
 			GetComponent<Animator>().SetBool("Running", false);
+
+		if (!isAlive) {
+			if (Input.GetButtonDown ("Fire1"))
+				SceneManager.LoadScene("Game");
+		}
 	}
 		
 	void FixedUpdate () {

@@ -1730,7 +1730,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c42c7760397f6f7459b67b71b6c2d578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverText: {fileID: 0}
   speed: 20
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &114727108132320830
 MonoBehaviour:
   m_ObjectHideFlags: 1
