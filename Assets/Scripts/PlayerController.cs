@@ -3,10 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
+	public int health = 100;
+
 	[SerializeField] private GameObject gameOverText;
 	[SerializeField] private float speed;
-	[SerializeField] private int health = 100;
 	[SerializeField] private LayerMask groundMask;
+	[SerializeField] private ScreenController screenController;
 
 	private Vector3 direction;
 	private Rigidbody rigidbodyPlayer;
@@ -69,6 +71,7 @@ public class PlayerController : MonoBehaviour {
 	/// <param name="damage">Damage taken.</param>
 	public void LoseHealth (int damage) {
 		health -= damage;
+		screenController.UpdateHealthSlider();
 
 		if (health <= 0)
 			GameOver();
