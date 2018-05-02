@@ -5,20 +5,15 @@ public class EnemyController : MonoBehaviour {
 	[SerializeField] private float speed;
 
 	private GameObject player;
-	private Rigidbody rigidbodyEnemy;
-	private Animator animatorEnemy;
+	private CharacterMovement enemyMovement;
+	private CharacterAnimation enemyAnimation;
 
 	void Start () {
-		// finds the player object
-		player = GameObject.FindGameObjectWithTag("Player");
+		player = GameObject.FindGameObjectWithTag("Player");		
+		enemyMovement = GetComponent<CharacterMovement>();
+		enemyAnimation = GetComponent<CharacterAnimation>();
 
-		// gets a random enemy
-		// (the Zombie prefab has 27 different zombie models inside it)
-		int randomEnemy = Random.Range(1, 28);
-		transform.GetChild(randomEnemy).gameObject.SetActive(true);
-
-		rigidbodyEnemy = GetComponent<Rigidbody>();
-		animatorEnemy = GetComponent<Animator>();
+		GetRandomEnemy();
 	}
 
 	void FixedUpdate () {
@@ -30,24 +25,19 @@ public class EnemyController : MonoBehaviour {
 		// the distance between the enemy and the player
 		Vector3 direction = player.transform.position - transform.position;
 
-		// rotates the enemy towards the player
-		Quaternion newRotation = Quaternion.LookRotation (direction);
-		rigidbodyEnemy.MoveRotation (newRotation);
+		enemyMovement.Rotation(direction);
 
 		// checks if enemy and player are not colliding.
 		// The 2.5f is because both enemy and player have a Capsule Collider with radius equal 1,
 		// so if the distance is bigger than both radius they are colliding
 		if (distance > 2.5f) {
-			// moves the enemy as in the PlayerController but 
-			// instead using the GetAxis method it uses the normalized direction vector
-			rigidbodyEnemy.MovePosition (
-				rigidbodyEnemy.position + (direction.normalized * Time.deltaTime * speed));
+			enemyMovement.Movement(direction, speed);
 
 			// if they're not colliding the Attacking animation is off
-			animatorEnemy.SetBool("Attacking", false);
+			enemyAnimation.Attack(false);
 		} else {
 			// otherwise, the Attacking animation is on
-			animatorEnemy.SetBool("Attacking", true);
+			enemyAnimation.Attack(true);
 		}
 	}
 
@@ -57,5 +47,12 @@ public class EnemyController : MonoBehaviour {
 	void AttackPlayer () {
 		int damage = Random.Range(20, 30);
 		player.GetComponent<PlayerController>().LoseHealth(damage);
+	}
+
+	void GetRandomEnemy () {
+		// gets a random enemy
+		// (the Zombie prefab has 27 different zombie models inside it)
+		int randomEnemy = Random.Range(1, 28);
+		transform.GetChild(randomEnemy).gameObject.SetActive(true);
 	}
 }

@@ -686,6 +686,8 @@ GameObject:
   - component: {fileID: 54960717925102508}
   - component: {fileID: 114631424241242012}
   - component: {fileID: 114727108132320830}
+  - component: {fileID: 114754729344323188}
+  - component: {fileID: 114821369273837384}
   m_Layer: 0
   m_Name: Personagens
   m_TagString: Player
@@ -1752,6 +1754,28 @@ MonoBehaviour:
   projectile: {fileID: 1940354067174096, guid: 80b905e0a2c68804f9b51d379681a5c6, type: 2}
   shootPosition: {fileID: 4751282350459432}
   shotSound: {fileID: 8300000, guid: ff894c666a8a12b49ae2ac522cb8b4ae, type: 3}
+--- !u!114 &114754729344323188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1884102019447498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32eca264ae4b3e43a4a0e032be73604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114821369273837384
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1884102019447498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7321f31d1e7cda041af4c2a26de950f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136843727479333622
 CapsuleCollider:
   m_ObjectHideFlags: 1
