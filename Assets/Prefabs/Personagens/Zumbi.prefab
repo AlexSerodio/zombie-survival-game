@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 54534540769439990}
   - component: {fileID: 114447579211330046}
   - component: {fileID: 114948108573447626}
+  - component: {fileID: 114177387312464070}
   m_Layer: 0
   m_Name: Zumbi
   m_TagString: Enemy
@@ -1420,6 +1421,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b34663e136f5dc4dbc293031b348d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathSound: {fileID: 8300000, guid: e21dd81695caab5499b47b785a6960d5, type: 3}
+--- !u!114 &114177387312464070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1063500868937916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 080af7d2cd924144c9ef6683b1d38ee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialHealth: 1
+  health: 0
   speed: 10
 --- !u!114 &114447579211330046
 MonoBehaviour:

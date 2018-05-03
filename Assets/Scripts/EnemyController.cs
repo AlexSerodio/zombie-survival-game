@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
-public class EnemyController : MonoBehaviour {
+public class EnemyController : MonoBehaviour, IKillable {
 
-	[SerializeField] private float speed;
+	[SerializeField] private AudioClip deathSound;
 
+	private Status enemyStatus;
 	private GameObject player;
 	private CharacterMovement enemyMovement;
 	private CharacterAnimation enemyAnimation;
@@ -12,6 +13,7 @@ public class EnemyController : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player");		
 		enemyMovement = GetComponent<CharacterMovement>();
 		enemyAnimation = GetComponent<CharacterAnimation>();
+		enemyStatus = GetComponent<Status>();
 
 		GetRandomEnemy();
 	}
@@ -31,7 +33,7 @@ public class EnemyController : MonoBehaviour {
 		// The 2.5f is because both enemy and player have a Capsule Collider with radius equal 1,
 		// so if the distance is bigger than both radius they are colliding
 		if (distance > 2.5f) {
-			enemyMovement.Movement(direction, speed);
+			enemyMovement.Movement(direction, enemyStatus.speed);
 
 			// if they're not colliding the Attacking animation is off
 			enemyAnimation.Attack(false);
@@ -55,4 +57,19 @@ public class EnemyController : MonoBehaviour {
 		int randomEnemy = Random.Range(1, 28);
 		transform.GetChild(randomEnemy).gameObject.SetActive(true);
 	}
+
+    public void LoseHealth(int damage)
+    {
+        enemyStatus.health -= damage;
+		if (enemyStatus.health <= 0)
+			Die();
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+
+		// plays the death sound
+		AudioController.instance.PlayOneShot(deathSound);
+    }
 }

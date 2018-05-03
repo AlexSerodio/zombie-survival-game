@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IKillable {
 
-	public int health = 100;
+	[HideInInspector]public Status playerStatus;
 
 	[SerializeField] private GameObject gameOverText;
-	[SerializeField] private float speed;
 	[SerializeField] private LayerMask groundMask;
 	[SerializeField] private ScreenController screenController;
 	[SerializeField] private AudioClip damageSound;
@@ -21,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 
 		playerMovement = GetComponent<PlayerMovement>();
 		playerAnimation = GetComponent<CharacterAnimation>();
+		playerStatus = GetComponent<Status>();
 	}
 
 	void Update () {
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
 
 		// if the player isn't alive anymore 
 		// and the mouse button was clicked, restart the game
-		if (health <= 0) {
+		if (playerStatus.health <= 0) {
 			if (Input.GetButtonDown ("Fire1"))
 				SceneManager.LoadScene("Game");
 		}
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour {
 		// moves the player by second using physics
 		// use physics (rigidbody) to compute the player movement is better than transform.position 
 		// because prevents the player to "bug" when colliding with other objects
-		playerMovement.Movement(direction, speed);
+		playerMovement.Movement(direction, playerStatus.speed);
 
 		playerMovement.PlayerRotation(groundMask);
 	}
@@ -58,20 +58,20 @@ public class PlayerController : MonoBehaviour {
 	/// </summary>
 	/// <param name="damage">Damage taken.</param>
 	public void LoseHealth (int damage) {
-		health -= damage;
+		playerStatus.health -= damage;
 		screenController.UpdateHealthSlider();
 
 		// plays the damage sound
 		AudioController.instance.PlayOneShot(damageSound);
 
-		if (health <= 0)
-			GameOver();
+		if (playerStatus.health <= 0)
+			Die();
 	}
 
 	/// <summary>
 	/// Pauses the game and display the Game Over message on the screen.
 	/// </summary>
-	private void GameOver () {
+	public void Die () {
 		Time.timeScale = 0;
 		gameOverText.SetActive(true);
 	}

@@ -10,16 +10,11 @@ public class ScreenController : MonoBehaviour {
 	void Start () {
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
-		healthSlider.maxValue = playerController.health;
+		healthSlider.maxValue = playerController.playerStatus.health;
 		UpdateHealthSlider();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	public void UpdateHealthSlider () {
-		healthSlider.value = playerController.health;
+		healthSlider.value = playerController.playerStatus.health;
 	}
 }

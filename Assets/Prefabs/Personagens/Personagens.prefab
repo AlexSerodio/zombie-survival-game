@@ -688,6 +688,7 @@ GameObject:
   - component: {fileID: 114727108132320830}
   - component: {fileID: 114754729344323188}
   - component: {fileID: 114821369273837384}
+  - component: {fileID: 114858058174429242}
   m_Layer: 0
   m_Name: Personagens
   m_TagString: Player
@@ -1732,9 +1733,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c42c7760397f6f7459b67b71b6c2d578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  playerStatus: {fileID: 0}
   gameOverText: {fileID: 0}
-  speed: 20
   groundMask:
     serializedVersion: 2
     m_Bits: 256
@@ -1776,6 +1776,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7321f31d1e7cda041af4c2a26de950f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114858058174429242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1884102019447498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 080af7d2cd924144c9ef6683b1d38ee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialHealth: 100
+  health: 0
+  speed: 20
 --- !u!136 &136843727479333622
 CapsuleCollider:
   m_ObjectHideFlags: 1
