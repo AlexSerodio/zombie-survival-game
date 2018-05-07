@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IKillable {
 
@@ -15,9 +14,6 @@ public class PlayerController : MonoBehaviour, IKillable {
 	private CharacterAnimation playerAnimation;
 
 	void Start () {
-		// Starts the game without been paused
-		Time.timeScale = 1;
-
 		playerMovement = GetComponent<PlayerMovement>();
 		playerAnimation = GetComponent<CharacterAnimation>();
 		playerStatus = GetComponent<Status>();
@@ -34,13 +30,6 @@ public class PlayerController : MonoBehaviour, IKillable {
 
 		// player animations transition
 		playerAnimation.Movement(direction.magnitude);
-
-		// if the player isn't alive anymore 
-		// and the mouse button was clicked, restart the game
-		if (playerStatus.health <= 0) {
-			if (Input.GetButtonDown ("Fire1"))
-				SceneManager.LoadScene("Game");
-		}
 	}
 		
 	void FixedUpdate () {
@@ -72,7 +61,6 @@ public class PlayerController : MonoBehaviour, IKillable {
 	/// Pauses the game and display the Game Over message on the screen.
 	/// </summary>
 	public void Die () {
-		Time.timeScale = 0;
-		gameOverText.SetActive(true);
+		screenController.GameOver();
 	}
 }
