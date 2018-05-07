@@ -7,7 +7,7 @@ public class Status : MonoBehaviour {
 	public float speed = 5;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		health = initialHealth;
 	}
 	
