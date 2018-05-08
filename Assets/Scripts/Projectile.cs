@@ -3,7 +3,6 @@
 public class Projectile : MonoBehaviour {
 
 	[SerializeField] private float speed;
-
 	private Rigidbody rigidbodyProjectile;
 
 	void Start () {
@@ -18,7 +17,7 @@ public class Projectile : MonoBehaviour {
 
 	// Destroy the projectile and the enemy
 	void OnTriggerEnter (Collider other) {
-		if (other.CompareTag ("Enemy"))
+		if (other.CompareTag("Enemy"))
 			other.GetComponent<EnemyController>().LoseHealth(1);
 
 		Destroy(gameObject);

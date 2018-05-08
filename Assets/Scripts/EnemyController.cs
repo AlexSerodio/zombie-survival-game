@@ -3,6 +3,7 @@
 public class EnemyController : MonoBehaviour, IKillable {
 
 	[SerializeField] private AudioClip deathSound;
+	[SerializeField] private GameObject aidKit;
 
 	private Status enemyStatus;
 	private GameObject player;
@@ -12,6 +13,7 @@ public class EnemyController : MonoBehaviour, IKillable {
 	private Vector3 direction;
 	private float rollingCounter;
 	private float randomPositionTime = 4;
+	private float probabilityAidKit = .1f;
 
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");		
@@ -45,6 +47,7 @@ public class EnemyController : MonoBehaviour, IKillable {
 			// if they're not colliding the Attacking animation is off
 			enemyAnimation.Attack(false);
 		} else {
+			direction = player.transform.position - transform.position;
 			// otherwise, the Attacking animation is on
 			enemyAnimation.Attack(true);
 		}
@@ -78,7 +81,14 @@ public class EnemyController : MonoBehaviour, IKillable {
 
 		// plays the death sound
 		AudioController.instance.PlayOneShot(deathSound);
+		InstantiateAidKit (probabilityAidKit);
     }
+
+	private void InstantiateAidKit (float probability) {
+		if (Random.value <= probability) {
+			Instantiate(aidKit, transform.position, Quaternion.identity);
+		}
+	}
 
 	private void Rolling () {
 		rollingCounter -= Time.deltaTime;
@@ -88,7 +98,7 @@ public class EnemyController : MonoBehaviour, IKillable {
 		}
 
 		bool closeEnough = Vector3.Distance(transform.position, randomPosition) <= 0.1;
-		if (closeEnough == false) {
+		if (!closeEnough) {
 			direction = randomPosition - transform.position;
 			enemyMovement.Movement(direction, enemyStatus.speed);
 		}

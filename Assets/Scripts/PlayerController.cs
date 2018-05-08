@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IKillable {
+public class PlayerController : MonoBehaviour, IKillable, ICurable {
 
 	[HideInInspector]public Status playerStatus;
 
-	[SerializeField] private GameObject gameOverText;
 	[SerializeField] private LayerMask groundMask;
 	[SerializeField] private ScreenController screenController;
 	[SerializeField] private AudioClip damageSound;
@@ -63,4 +62,11 @@ public class PlayerController : MonoBehaviour, IKillable {
 	public void Die () {
 		screenController.GameOver();
 	}
+
+    public void HealHealth(int amount) {
+        playerStatus.health += amount;
+		if (playerStatus.health > playerStatus.initialHealth)
+			playerStatus.health = playerStatus.initialHealth;
+		screenController.UpdateHealthSlider();
+    }
 }

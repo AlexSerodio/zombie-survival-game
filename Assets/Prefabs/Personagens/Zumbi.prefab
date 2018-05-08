@@ -1422,6 +1422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathSound: {fileID: 8300000, guid: e21dd81695caab5499b47b785a6960d5, type: 3}
+  aidKit: {fileID: 1060151288946202, guid: 6150c6f66b7034ec5b3672478195682a, type: 2}
 --- !u!114 &114177387312464070
 MonoBehaviour:
   m_ObjectHideFlags: 1

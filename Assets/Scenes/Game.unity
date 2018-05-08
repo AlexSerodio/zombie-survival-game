@@ -5725,7 +5725,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1664235607508604, guid: 69e039876da7c54479f83070294fcaed, type: 2}
       propertyPath: m_Name
-      value: EnemyFactory (2)
+      value: EnemySpawner (2)
       objectReference: {fileID: 0}
     - target: {fileID: 114894789552454774, guid: 69e039876da7c54479f83070294fcaed,
         type: 2}
@@ -7040,7 +7040,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1664235607508604, guid: 69e039876da7c54479f83070294fcaed, type: 2}
       propertyPath: m_Name
-      value: EnemyFactory (3)
+      value: EnemySpawner (3)
       objectReference: {fileID: 0}
     - target: {fileID: 114894789552454774, guid: 69e039876da7c54479f83070294fcaed,
         type: 2}
@@ -9208,7 +9208,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1664235607508604, guid: 69e039876da7c54479f83070294fcaed, type: 2}
       propertyPath: m_Name
-      value: EnemyFactory (1)
+      value: EnemySpawner (1)
       objectReference: {fileID: 0}
     - target: {fileID: 114894789552454774, guid: 69e039876da7c54479f83070294fcaed,
         type: 2}
