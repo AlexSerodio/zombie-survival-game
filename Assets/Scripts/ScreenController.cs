@@ -8,15 +8,16 @@ public class ScreenController : MonoBehaviour {
 	[SerializeField] private GameObject gameOverPanel;
 	[SerializeField] private Text scoreText;
 	[SerializeField] private Text maxScoreText;
+	[SerializeField] private Text deadZombiesText;
 	private float maxScore;
-
+	private int deadZombiesCount;
+	
 	private PlayerController playerController; 
 
 	void Start () {
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
 		maxScore = PlayerPrefs.GetFloat("MaxScore");
-		Debug.Log(maxScore);
 
 		healthSlider.maxValue = playerController.playerStatus.health;
 		UpdateHealthSlider();
@@ -41,6 +42,11 @@ public class ScreenController : MonoBehaviour {
 
 	public void Restart () {
 		SceneManager.LoadScene("Game");
+	}
+	
+	public void UpdateDeadZombiesCount () {
+		deadZombiesCount++;
+		deadZombiesText.text = string.Format("x {0}", deadZombiesCount);
 	}
 
 	private void UpdateMaxScore (int minutes, int seconds, float time) {

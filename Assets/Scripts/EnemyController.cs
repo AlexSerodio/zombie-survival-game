@@ -4,11 +4,12 @@ public class EnemyController : MonoBehaviour, IKillable {
 
 	[SerializeField] private AudioClip deathSound;
 	[SerializeField] private GameObject aidKit;
-
+	
 	private Status enemyStatus;
 	private GameObject player;
 	private CharacterMovement enemyMovement;
 	private CharacterAnimation enemyAnimation;
+	private ScreenController screenController;
 	private Vector3 randomPosition;
 	private Vector3 direction;
 	private float rollingCounter;
@@ -20,7 +21,8 @@ public class EnemyController : MonoBehaviour, IKillable {
 		enemyMovement = GetComponent<CharacterMovement>();
 		enemyAnimation = GetComponent<CharacterAnimation>();
 		enemyStatus = GetComponent<Status>();
-
+		screenController = FindObjectOfType<ScreenController>();
+		
 		GetRandomEnemy();
 	}
 
@@ -68,26 +70,25 @@ public class EnemyController : MonoBehaviour, IKillable {
 		transform.GetChild(randomEnemy).gameObject.SetActive(true);
 	}
 
-    public void LoseHealth(int damage)
-    {
+    public void LoseHealth(int damage) {
         enemyStatus.health -= damage;
 		if (enemyStatus.health <= 0)
 			Die();
     }
 
-    public void Die()
-    {
+    public void Die() {
         Destroy(gameObject);
 
+	    screenController.UpdateDeadZombiesCount();
+	    
 		// plays the death sound
 		AudioController.instance.PlayOneShot(deathSound);
 		InstantiateAidKit (probabilityAidKit);
     }
 
 	private void InstantiateAidKit (float probability) {
-		if (Random.value <= probability) {
+		if (Random.value <= probability)
 			Instantiate(aidKit, transform.position, Quaternion.identity);
-		}
 	}
 
 	private void Rolling () {
