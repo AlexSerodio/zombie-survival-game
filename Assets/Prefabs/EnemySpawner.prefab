@@ -51,7 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbc207620de6764e93f45ae43ab1222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 1063500868937916, guid: 35861510587b7489780fe86970823679, type: 2}
+  enemyPrefab: {fileID: 1063500868937916, guid: 35861510587b7489780fe86970823679,
+    type: 2}
   instantiateTime: 2.5
   enemyLayer:
     serializedVersion: 2

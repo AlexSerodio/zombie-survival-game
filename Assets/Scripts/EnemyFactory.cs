@@ -3,28 +3,45 @@ using UnityEngine;
 
 public class EnemyFactory : MonoBehaviour {
 
-	[SerializeField] private GameObject enemy;
+	[SerializeField] private GameObject enemyPrefab;
 	[SerializeField] private float instantiateTime = 1;
 	[SerializeField] private LayerMask enemyLayer;
 	private float instantiationDistance = 3;
 	private float playerDistance = 20;
 	private float timeCounter = 0;
 	private GameObject player;
+	private int maxAliveEnemiesAmount = 2;
+	private int aliveEnemiesAmount;
+	private float nextDifficultyIncreaseTime = 5;
+	private float difficultyIncreaseCounter;
 
 	void Start () {
 		player = GameObject.FindWithTag("Player");
+		difficultyIncreaseCounter = nextDifficultyIncreaseTime;
+		for (int i = 0; i < maxAliveEnemiesAmount; i++) {
+			StartCoroutine(InstantiateNewEnemy());
+		}
 	}
 
 	// instantiates a new enemy each second
 	void Update () {
-		if (Vector3.Distance(transform.position, player.transform.position) > playerDistance) {
+
+		bool canInstantiateEnemy = Vector3.Distance(transform.position, 
+			                            player.transform.position) > playerDistance;
+		
+		if (canInstantiateEnemy && aliveEnemiesAmount < maxAliveEnemiesAmount) {
 			timeCounter += Time.deltaTime;
 
 			if (timeCounter >= instantiateTime) {
 				StartCoroutine(InstantiateNewEnemy());
 				timeCounter = 0;
 			}	
-		}		
+		}
+
+		if (Time.timeSinceLevelLoad >= difficultyIncreaseCounter) {
+			maxAliveEnemiesAmount++;
+			difficultyIncreaseCounter += nextDifficultyIncreaseTime;
+		}
 	}
 
 	private IEnumerator InstantiateNewEnemy () {
@@ -37,7 +54,9 @@ public class EnemyFactory : MonoBehaviour {
 			yield return null;
 		}
 		
-		Instantiate(enemy, position, transform.rotation);
+		EnemyController enemy = Instantiate(enemyPrefab, position, transform.rotation).GetComponent<EnemyController>();
+		enemy.enemyFactory = this;
+		aliveEnemiesAmount++;
 	}
 
 	private Vector3 GetRandomPosition () {
@@ -50,5 +69,9 @@ public class EnemyFactory : MonoBehaviour {
 	void OnDrawGizmos () {
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireSphere(transform.position, instantiationDistance);
+	}
+
+	public void DecreaseAliveEnemiesAmount() {
+		aliveEnemiesAmount--;
 	}
 }

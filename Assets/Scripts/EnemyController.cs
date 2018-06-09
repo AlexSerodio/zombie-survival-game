@@ -2,6 +2,8 @@
 
 public class EnemyController : MonoBehaviour, IKillable {
 
+	[HideInInspector] public EnemyFactory enemyFactory;
+	
 	[SerializeField] private AudioClip deathSound;
 	[SerializeField] private GameObject aidKit;
 	
@@ -80,6 +82,7 @@ public class EnemyController : MonoBehaviour, IKillable {
         Destroy(gameObject);
 
 	    screenController.UpdateDeadZombiesCount();
+	    enemyFactory.DecreaseAliveEnemiesAmount();
 	    
 		// plays the death sound
 		AudioController.instance.PlayOneShot(deathSound);
