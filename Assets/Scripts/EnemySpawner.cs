@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class EnemyFactory : MonoBehaviour {
+public class EnemySpawner : MonoBehaviour {
 
 	[SerializeField] private GameObject enemyPrefab;
 	[SerializeField] private float instantiateTime = 1;
@@ -55,7 +55,7 @@ public class EnemyFactory : MonoBehaviour {
 		}
 		
 		EnemyController enemy = Instantiate(enemyPrefab, position, transform.rotation).GetComponent<EnemyController>();
-		enemy.enemyFactory = this;
+		enemy.EnemySpawner = this;
 		aliveEnemiesAmount++;
 	}
 

@@ -15,4 +15,8 @@ public class CharacterAnimation : MonoBehaviour {
 	public void Movement (float value) {
 		animator.SetFloat("Running", value);
 	}
+	
+	public void Die () {
+		animator.SetTrigger("Die");
+	}
 }

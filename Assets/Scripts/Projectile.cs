@@ -17,8 +17,16 @@ public class Projectile : MonoBehaviour {
 
 	// Destroy the projectile and the enemy
 	void OnTriggerEnter (Collider other) {
-		if (other.CompareTag("Enemy"))
-			other.GetComponent<EnemyController>().LoseHealth(1);
+		switch (other.tag) {
+			case "Enemy":
+				other.GetComponent<EnemyController>().LoseHealth(1);
+				break;
+			case "Boss":
+				other.GetComponent<BossController>().LoseHealth(1);
+				break;
+		}
+
+		
 
 		Destroy(gameObject);
 	}

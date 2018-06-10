@@ -2,7 +2,7 @@
 
 public class EnemyController : MonoBehaviour, IKillable {
 
-	[HideInInspector] public EnemyFactory enemyFactory;
+	[HideInInspector] public EnemySpawner EnemySpawner;
 	
 	[SerializeField] private AudioClip deathSound;
 	[SerializeField] private GameObject aidKit;
@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour, IKillable {
 	void GetRandomEnemy () {
 		// gets a random enemy
 		// (the Zombie prefab has 27 different zombie models inside it)
-		int randomEnemy = Random.Range(1, 28);
+		int randomEnemy = Random.Range(1, transform.GetChildCount());
 		transform.GetChild(randomEnemy).gameObject.SetActive(true);
 	}
 
@@ -79,10 +79,13 @@ public class EnemyController : MonoBehaviour, IKillable {
     }
 
     public void Die() {
-        Destroy(gameObject);
-
+        Destroy(gameObject, 2);
+		enemyAnimation.Die();
+	    enemyMovement.Die();
+	    enabled = false;
+	    
 	    screenController.UpdateDeadZombiesCount();
-	    enemyFactory.DecreaseAliveEnemiesAmount();
+	    EnemySpawner.DecreaseAliveEnemiesAmount();
 	    
 		// plays the death sound
 		AudioController.instance.PlayOneShot(deathSound);
@@ -98,7 +101,7 @@ public class EnemyController : MonoBehaviour, IKillable {
 		rollingCounter -= Time.deltaTime;
 		if (rollingCounter <= 0) {
 			randomPosition = GetRandomPosition();
-			rollingCounter += randomPositionTime;
+			rollingCounter += randomPositionTime + Random.Range(-1f, 1f);
 		}
 
 		bool closeEnough = Vector3.Distance(transform.position, randomPosition) <= 0.1;
