@@ -6,6 +6,7 @@ public class EnemyController : MonoBehaviour, IKillable {
 	
 	[SerializeField] private AudioClip deathSound;
 	[SerializeField] private GameObject aidKit;
+	[SerializeField] private GameObject bloodParticle;
 	
 	private Status enemyStatus;
 	private GameObject player;
@@ -91,6 +92,10 @@ public class EnemyController : MonoBehaviour, IKillable {
 		AudioController.instance.PlayOneShot(deathSound);
 		InstantiateAidKit (probabilityAidKit);
     }
+
+	public void BloodParticle(Vector3 position, Quaternion rotation) {
+		Instantiate(bloodParticle, position, rotation);
+	}
 
 	private void InstantiateAidKit (float probability) {
 		if (Random.value <= probability)

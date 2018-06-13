@@ -17,12 +17,17 @@ public class Projectile : MonoBehaviour {
 
 	// Destroy the projectile and the enemy
 	void OnTriggerEnter (Collider other) {
+		Quaternion rotation = Quaternion.LookRotation(-transform.forward);
 		switch (other.tag) {
 			case "Enemy":
-				other.GetComponent<EnemyController>().LoseHealth(1);
+				EnemyController enemy = other.GetComponent<EnemyController>();
+				enemy.LoseHealth(1);
+				enemy.BloodParticle(transform.position, rotation);
 				break;
 			case "Boss":
-				other.GetComponent<BossController>().LoseHealth(1);
+				BossController boss = other.GetComponent<BossController>();
+				boss.LoseHealth(1);
+				boss.BloodParticle(transform.position, rotation);
 				break;
 		}
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,8 @@ public class ScreenController : MonoBehaviour {
 	[SerializeField] private Text scoreText;
 	[SerializeField] private Text maxScoreText;
 	[SerializeField] private Text deadZombiesText;
+	[SerializeField] private Text bossText;
+	
 	private float maxScore;
 	private int deadZombiesCount;
 	
@@ -59,6 +62,27 @@ public class ScreenController : MonoBehaviour {
 			minutes = (int)(time / 60);
 			seconds = (int)(time % 60);
 			maxScoreText.text = string.Format("Your best time is {0} minutes and {1} seconds.", minutes, seconds);
+		}
+	}
+
+	public void ShowBossText() {
+		StartCoroutine(TextDisappear(2, bossText));
+	}
+
+	private IEnumerator TextDisappear(float time,Text text) {
+		text.gameObject.SetActive(true);
+		Color textColor = text.color;
+		textColor.a = 1;
+		text.color = textColor;
+		yield return new WaitForSeconds(1);
+		float count = 0;
+		while (text.color.a > 0) {
+			count += Time.deltaTime / time;
+			textColor.a = Mathf.Lerp(1, 0, count);
+			text.color = textColor;
+			if (text.color.a <= 0)
+				text.gameObject.SetActive(false);
+			yield return null;
 		}
 	}
 }

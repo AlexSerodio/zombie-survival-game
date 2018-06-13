@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class BossController : MonoBehaviour, IKillable{
 
 	[SerializeField]private GameObject aidKitPrefab;
+	[SerializeField] private Slider bossSlider;
+	[SerializeField] private Image sliderImage;
+	[SerializeField] private Color maxHealthColor;
+	[SerializeField] private Color minHealthColor;
+	[SerializeField] private GameObject bloodParticle;
 	
 	private Transform player;
 	private NavMeshAgent agent;
@@ -18,6 +24,8 @@ public class BossController : MonoBehaviour, IKillable{
 		agent.speed = bossStatus.speed;
 		bossAnimation = GetComponent<CharacterAnimation>();
 		bossMovement = GetComponent<CharacterMovement>();
+		bossSlider.maxValue = bossStatus.initialHealth;
+		UpdateInterface();
 	}
 
 	private void Update() {
@@ -44,9 +52,9 @@ public class BossController : MonoBehaviour, IKillable{
 
 	public void LoseHealth(int damage) {
 		bossStatus.health -= damage;
-		if (bossStatus.health <= 0) {
+		UpdateInterface();
+		if (bossStatus.health <= 0)
 			Die();
-		}
 	}
 
 	public void Die() {
@@ -56,5 +64,16 @@ public class BossController : MonoBehaviour, IKillable{
 		Instantiate(aidKitPrefab, transform.position, Quaternion.identity);
 		enabled = false;
 		agent.enabled = false;
+	}
+
+	public void BloodParticle(Vector3 position, Quaternion rotation) {
+		Instantiate(bloodParticle, position, rotation);
+	}
+	
+	private void UpdateInterface() {
+		bossSlider.value = bossStatus.health;
+		float healthPercent = (float)bossStatus.health / bossStatus.initialHealth;
+		Color healthColor = Color.Lerp(minHealthColor, maxHealthColor, healthPercent);
+		sliderImage.color = healthColor;
 	}
 }
